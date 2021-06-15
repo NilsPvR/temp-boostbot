@@ -1,0 +1,13 @@
+{
+	"prefix": "temp!",
+	"default_cooldown": 1,
+	"default_deltetime": 3000,
+	"colors": {
+		"orange": "#d68727",
+		"red": "#c2110e",
+		"green": "#529c08"
+	},
+	"botdev": [
+		"421039411124371457"
+	]
+}

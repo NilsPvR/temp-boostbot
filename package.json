@@ -1,0 +1,25 @@
+{
+  "name": "temp-boostbot",
+  "version": "1.0.0",
+  "description": "This is a temporary discord.js bot which shows the boosters on a server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NilsPvR/temp-boostbot.git"
+  },
+  "author": "Nils",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/NilsPvR/temp-boostbot/issues"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0"
+  }
+}
