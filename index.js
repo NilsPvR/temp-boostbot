@@ -18,7 +18,7 @@ const client = new Discord.Client({
 // const path = require('path'); // node native path module
 
 
-// const { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 client.once('ready', () => {
@@ -35,24 +35,50 @@ client.on('message', async message => {
 	const args = messageWOprefix.trim().split(/ +/);
 	const command = args.shift().toLowerCase(); // the command which user has entered
 
-	if (command === 'boosters') {
-		console.log('working');
+	try {
+		if (command === 'boosters') {
+			console.log('working');
 
-		const members = await message.guild.members.fetch();
+			const members = await message.guild.members.fetch();
 
-		const boostMembers = members.filter(mem => mem.premiumSinceTimestamp);
+			const boostMembers = members.filter(mem => mem.premiumSinceTimestamp)
+				.sort((aMem, bMem) => aMem.premiumSinceTimestamp - bMem.premiumSinceTimestamp);
 
-		const boostersMsg = [];
+			const boostersMsg = [];
 
-		for(const boostmem of boostMembers) {
-			boostersMsg.push(`\n${boostmem.displayName} ${boostmem.premiumSinceTimestamp}`);
+			let index = 1;
+			boostMembers.map(boostmem => {
+				// console.log(boostmem.premiumSinceTimestamp);
+				// console.log(boostmem.displayName);
+				boostersMsg.push(`\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`);
+			});
+
+			const fieldArr = [{}, {}, {}, {}, {}];
+
+			let counter = 0;
+			while(boostersMsg.length > 20) {
+				let value = '';
+				for(let i = 0; i < 20; i++) {
+					value += boostersMsg.shift();
+				}
+				fieldArr[counter].name = '\u200B';
+				fieldArr[counter++].value = value;
+			}
+			fieldArr[4] = { name: '\u200B', value: boostersMsg.join('') };
+
+			return message.channel.send(new MessageEmbed()
+				.setColor('F697FF')
+				.setTitle(`Nitro Boosters in ${message.channel.guild.name}`)
+				.addFields(fieldArr[0], fieldArr[1], fieldArr[2], fieldArr[3], fieldArr[4]));
+			// message.channel.send(`Nitro Boosters in "${message.channel.guild.name}":\n${boostersMsg}`, { split: true });
 		}
-		message.channel.send(`Nitro Boosters in "${message.channel.guild.name}":\n${boostersMsg}`);
+		else if (command === 'beep') {
+			message.channel.send(`The only command I currently provide is ${prefix}boosters!`);
+		}
 	}
-	else if (command === 'beep') {
-		message.channel.send(`The only command I currently provide is ${prefix}boosters!`);
+	catch(error) {
+		console.error();
 	}
-	// ...
 });
 
 
