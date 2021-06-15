@@ -14,18 +14,18 @@ const client = new Discord.Client({
 	},
 });
 
-const fs = require('fs'); // node native file system
-const path = require('path'); // node native path module
+// const fs = require('fs'); // node native file system
+// const path = require('path'); // node native path module
 
 
-const { MessageEmbed } = require('discord.js');
+// const { MessageEmbed } = require('discord.js');
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 client.once('ready', () => {
 	console.log('Ready!');
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
 	if (message.author.bot || message.channel.type == 'dm' || !prefixRegex.test(message.content)) return;
 
@@ -35,11 +35,22 @@ client.on('message', message => {
 	const args = messageWOprefix.trim().split(/ +/);
 	const command = args.shift().toLowerCase(); // the command which user has entered
 
-	if (command === 'ping') {
-		message.channel.send('Pong.');
+	if (command === 'boosters') {
+		console.log('working');
+
+		const members = await message.guild.members.fetch();
+
+		const boostMembers = members.filter(mem => mem.premiumSinceTimestamp);
+
+		const boostersMsg = [];
+
+		for(const boostmem of boostMembers) {
+			boostersMsg.push(`\n${boostmem.displayName} ${boostmem.premiumSinceTimestamp}`);
+		}
+		message.channel.send(`Nitro Boosters in "${message.channel.guild.name}":\n${boostersMsg}`);
 	}
 	else if (command === 'beep') {
-		message.channel.send('Boop.');
+		message.channel.send(`The only command I currently provide is ${prefix}boosters!`);
 	}
 	// ...
 });

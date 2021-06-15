@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/NilsPvR/temp-boostbot/issues"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "discord.js": "^12.5.3",
     "dotenv": "^9.0.2"
