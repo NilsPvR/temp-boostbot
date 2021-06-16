@@ -26,6 +26,9 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
+	if (message.content == 's!boosters') {
+		message.reply('try using `b!boosters` for now.');
+	}
 	const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
 	if (message.author.bot || message.channel.type == 'dm' || !prefixRegex.test(message.content)) return;
 
@@ -37,7 +40,6 @@ client.on('message', async message => {
 
 	try {
 		if (command === 'boosters') {
-			console.log('working');
 
 			const members = await message.guild.members.fetch();
 
