@@ -26,13 +26,13 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
-	if (message.content == 's!boosters') {
+	if (message.content.toLowerCase() == 's!boosters') {
 		message.reply('try using `b!boosters` for now.');
 	}
 	const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
-	if (message.author.bot || message.channel.type == 'dm' || !prefixRegex.test(message.content)) return;
+	if (message.author.bot || message.channel.type == 'dm' || !prefixRegex.test(message.content.toLowerCase())) return;
 
-	const [, matchedPrefix] = prefixRegex.test(message.content) ? message.content.match(prefixRegex) : '';
+	const [, matchedPrefix] = prefixRegex.test(message.content.toLowerCase()) ? message.content.toLowerCase().match(prefixRegex) : '';
 	const messageWOprefix = message.content.slice(matchedPrefix.length);
 
 	const args = messageWOprefix.trim().split(/ +/);
