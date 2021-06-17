@@ -51,15 +51,14 @@ client.on('message', async message => {
 
 			const members = await message.guild.members.fetch();
 
-			const boostMembers = members.filter(mem => mem.premiumSinceTimestamp)
+			const boostMembers = members.filter(mem => mem.premiumSinceTimestamp) // sort all boosters by timestamp of when they started bossting
 				.sort((aMem, bMem) => aMem.premiumSinceTimestamp - bMem.premiumSinceTimestamp);
 
-			const boostersMsg = [];
 
 			let index = 1;
-			boostMembers.map(boostmem => {
+			const boostersMsg = boostMembers.map(boostmem => {
 				// creates an array with one entry per booster
-				boostersMsg.push(`\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`);
+				return `\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 			});
 
 			const fieldArr = [];
