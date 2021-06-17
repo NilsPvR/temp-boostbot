@@ -75,7 +75,7 @@ client.on('message', async message => {
 					value: boostersMsg20,
 				});
 			}
-			fieldArr.push = { name: '\u200B', value: boostersMsg.join('') }; // add last items
+			fieldArr.push({ name: '\u200B', value: boostersMsg.join('') }); // add last items
 
 			if (fieldArr.length > 25) { // remove all items that are more then 25
 				fieldArr.splice(25, fieldArr.length - 25);
