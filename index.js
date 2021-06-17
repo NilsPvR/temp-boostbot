@@ -40,6 +40,14 @@ client.on('message', async message => {
 
 	try {
 		if (command === 'boosters') {
+			/* Fields are limited to 2048 chars:
+				a discord name has max. 32chars -> each field 20members = 32*20 = 640
+				seperators + date: 5 + date = 5 + 8 = 13
+				indicator: estimated max: 4
+				 -> = 657
+			  max 25 fields:
+			  	20 boosters per field * 25 = 500 boosters
+			*/
 
 			const members = await message.guild.members.fetch();
 
@@ -50,32 +58,40 @@ client.on('message', async message => {
 
 			let index = 1;
 			boostMembers.map(boostmem => {
-				// console.log(boostmem.premiumSinceTimestamp);
-				// console.log(boostmem.displayName);
+				// creates an array with one entry per booster
 				boostersMsg.push(`\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`);
 			});
 
-			const fieldArr = [{}, {}, {}, {}, {}];
+			const fieldArr = [];
 
-			let counter = 0;
-			while(boostersMsg.length > 20) {
-				let value = '';
+			while(boostersMsg.length > 20) { // add all boosters in groups of 20
+				let boostersMsg20 = '';
 				for(let i = 0; i < 20; i++) {
-					value += boostersMsg.shift();
+					boostersMsg20 += boostersMsg.shift(); // remove the first element since the arr is in reverse order
 				}
-				fieldArr[counter].name = '\u200B';
-				fieldArr[counter++].value = value;
+
+				fieldArr.push({
+					name: '\u200B',
+					value: boostersMsg20,
+				});
 			}
-			fieldArr[4] = { name: '\u200B', value: boostersMsg.join('') };
+			fieldArr.push = { name: '\u200B', value: boostersMsg.join('') }; // add last items
+
+			if (fieldArr.length > 25) { // remove all items that are more then 25
+				fieldArr.splice(25, fieldArr.length - 25);
+			}
+			const description = (fieldArr.length > 25) ? 'It seems like there are more then 500 boosters o.O. I am currently unable to display all boosters therefore only the first 500 boosters will be displayed' : '';
 
 			return message.channel.send(new MessageEmbed()
 				.setColor('F697FF')
 				.setTitle(`Nitro Boosters in ${message.channel.guild.name}`)
-				.addFields(fieldArr[0], fieldArr[1], fieldArr[2], fieldArr[3], fieldArr[4]));
+
+				.setDescription(description)
+				.addFields(fieldArr));
 			// message.channel.send(`Nitro Boosters in "${message.channel.guild.name}":\n${boostersMsg}`, { split: true });
 		}
-		else if (command === 'beep') {
-			message.channel.send(`The only command I currently provide is ${prefix}boosters!`);
+		else {
+			message.channel.send(`The only command I currently provide is \`${prefix}boosters\`!`);
 		}
 	}
 	catch(error) {
