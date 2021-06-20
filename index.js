@@ -141,7 +141,9 @@ client.on('message', async message => {
 				return message.channel.send(new MessageEmbed()
 					.setColor(colors.red)
 
-					.setDescription((inputtedMember.id == message.member) ? 'You are currently not boosting the server!' : `\`${args.join(' ')}\` is currently not boosting the server!`));
+					.setDescription((inputtedMember.id == message.member) ? 'You are currently not boosting the server!'
+						: `\`${inputtedMember.displayName}\` is currently not boosting the server!`)
+					.setFooter((inputtedMember.id == message.member) ? '' : `${inputtedMember.user.tag} - ${inputtedMember.id}`));
 			}
 
 

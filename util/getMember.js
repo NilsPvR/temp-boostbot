@@ -64,7 +64,7 @@ module.exports = {
 			message.channel.send({ embed:
 				{ // embed object
 					color: colors.red,
-					description: `Unable to find someone who is boosting the server with the ${inputType}: ${inputtedname}`,
+					description: `Unable to find someone on this server with the ${inputType}: ${inputtedname}`,
 				},
 			});
 		}
