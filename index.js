@@ -62,7 +62,9 @@ client.on('message', async message => {
 				let boostersMsg20 = '';
 				for(let i = 0; i < 20; i++) {
 					const boostmem = boostMembers.first(); // get first member
-					boostersMsg20 += `\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+					// add a space to mark the message author
+					if (message.member.id == boostmem.id) boostersMsg20 += `\n\u2000${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+					else boostersMsg20 += `\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 					boostMembers.delete(boostMembers.firstKey()); // delete the member
 				}
 
@@ -71,9 +73,21 @@ client.on('message', async message => {
 					value: boostersMsg20,
 				});
 			}
-			fieldArr.push({ // add last boosters
+
+
+			let boostersMsg20 = '';
+			const size = boostMembers.size;
+			for(let i = 0; i < size; i++) { // iterate over the last members
+				const boostmem = boostMembers.first(); // get first member
+				// add a space to mark the message author
+				if (message.member.id == boostmem.id) boostersMsg20 += `\n\u2000${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+				else boostersMsg20 += `\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+				boostMembers.delete(boostMembers.firstKey()); // delete the member
+			}
+
+			fieldArr.push({
 				name: '\u200B',
-				value: boostMembers.map(boostmem => `${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`).join('\n'),
+				value: boostersMsg20,
 			});
 
 			if (fieldArr.length > 25) { // remove all fields that are more then 25
@@ -94,7 +108,7 @@ client.on('message', async message => {
 		}
 	}
 	catch(error) {
-		console.error();
+		console.error(error);
 	}
 });
 
