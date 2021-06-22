@@ -69,9 +69,9 @@ client.on('message', async message => {
 					const boostmem = boostMembers.first(); // get first member
 
 					// look for the specified member
-					if (inputtedMember?.id == boostmem.id) boostersMsg20 += `\n\u2000${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+					if (inputtedMember?.id == boostmem.id) boostersMsg20 += `\n<:invisable:856156594835161099>${index++}. __**${boostmem.displayName}**__ - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 					// add a space to mark the message author, if noone else defined
-					else if (message.member.id == boostmem.id && !inputtedMember) boostersMsg20 += `\n\u2000${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+					else if (message.member.id == boostmem.id && !inputtedMember) boostersMsg20 += `\n<:invisable:856156594835161099>${index++}. __**${boostmem.displayName}**__ - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 					else boostersMsg20 += `\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 
 					boostMembers.delete(boostMembers.firstKey()); // delete the member
@@ -89,9 +89,9 @@ client.on('message', async message => {
 			for(let i = 0; i < size; i++) { // iterate over the last members
 				const boostmem = boostMembers.first(); // get first member
 				// look for the specified member
-				if (inputtedMember?.id == boostmem.id) boostersMsg20 += `\n\u2000${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+				if (inputtedMember?.id == boostmem.id) boostersMsg20 += `\n<:invisable:856156594835161099>${index++}. __**${boostmem.displayName}**__ - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 				// add a space to mark the message author, if noone else defined
-				else if (message.member.id == boostmem.id && !inputtedMember) boostersMsg20 += `\n\u2000${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
+				else if (message.member.id == boostmem.id && !inputtedMember) boostersMsg20 += `\n<:invisable:856156594835161099>${index++}. __**${boostmem.displayName}**__ - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 				else boostersMsg20 += `\n${index++}. **${boostmem.displayName}** - (${boostmem.premiumSince.toLocaleDateString('en-US')})`;
 				boostMembers.delete(boostMembers.firstKey()); // delete the member
 			}
@@ -100,12 +100,6 @@ client.on('message', async message => {
 				name: '\u200B',
 				value: boostersMsg20,
 			});
-
-			for (let i = 0; i < fieldArr.length; i++) { // check all fields
-				if (fieldArr[i].value?.charAt(1) == '\u2000') { // if the first member in the field is supposed to be intented
-					fieldArr[i].value = '່' + fieldArr[i].value.substring(1); // replace \n with special char so discord doesn't remove the space \u2000
-				}
-			}
 
 			if (fieldArr.length > 25) { // remove all fields that are more then 25
 				fieldArr.splice(25, fieldArr.length - 25);
