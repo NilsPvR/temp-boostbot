@@ -131,6 +131,7 @@ client.on('message', async message => {
 			if (!inputtedMember) return;
 
 			const boostingPlace = boostMembers.findIndex(mem => mem.id == inputtedMember.id) + 1;
+			const bPlaceText = place => place += [null, 'st', 'nd', 'rd'][place.match`1?.$`] || 'th';
 			if (boostingPlace === -1 || boostingPlace === 0) {
 				return message.channel.send(new MessageEmbed()
 					.setColor(colors.red)
@@ -145,7 +146,7 @@ client.on('message', async message => {
 				.setColor(colors.pink)
 				.setTitle('Boosting place')
 
-				.setDescription(`<@${inputtedMember.id}> is currently the **${boostingPlace}.** booster on this server!`)
+				.setDescription(`<@${inputtedMember.id}> is currently the **${bPlaceText(String(boostingPlace))}** booster on this server!`)
 				.setFooter(`${inputtedMember.user.tag} - ${inputtedMember.id}`));
 
 
